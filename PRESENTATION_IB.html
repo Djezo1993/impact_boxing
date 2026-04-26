@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impact Boxing — Proposition Identité Visuelle · Studio Djezo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --red: #E10600;
+      --orange: #FD3A20;
+      --gold: #C8A462;
+      --yellow: #FFE628;
+      --blue: #1A3B8C;
+      --grey: #1A1A1A;
+      --grey-mid: #2C2C2C;
+      --grey-light: #888;
+      --navy: #0D2B45;
+      --accent3: #DDB93F;
+      --cream3: #F4F1EA;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+    img, svg { max-width: 100%; display: block; }
+
+    /* ─── CUSTOM CURSOR ─────────────────────────────── */
+    #cursor {
+      position: fixed; z-index: 9999;
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform .1s;
+    }
+    #cursor-ring {
+      position: fixed; z-index: 9998;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(253, 58, 32, .5);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform .15s ease, width .3s, height .3s, border-color .3s;
+    }
+    body:hover #cursor-ring { border-color: rgba(253, 58, 32, .8); }
+
+    /* ─── LOADER ─────────────────────────────────────── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9000;
+      background: var(--black);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #loader-impact {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(225, 6, 0, .15);
+      animation: loader-pulse 1.4s ease-out infinite;
+    }
+    #loader-impact:nth-child(2) { animation-delay: .4s; }
+    #loader-impact:nth-child(3) { animation-delay: .8s; }
+    @keyframes loader-pulse {
+      0% { transform: scale(0); opacity: .8; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+    #loader-title {
+      font-family: var(--font-display);
+      font-size: clamp(60px, 10vw, 120px);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      line-height: 1;
+      text-align: center;
+      position: relative;
+    }
+    #loader-title .accent { color: var(--red); }
+    #loader-sub {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--grey-light);
+      margin-top: 24px;
+    }
+    #loader-bar-wrap {
+      width: 200px; height: 1px;
+      background: var(--grey-mid);
+      margin-top: 48px; overflow: hidden;
+    }
+    #loader-bar {
+      height: 100%;
+      background: var(--red);
+      width: 0%;
+      transition: width .05s linear;
+    }
+    #loader-count {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      color: var(--red);
+      margin-top: 12px;
+    }
+    #loader.hidden {
+      animation: loader-exit .6s cubic-bezier(.76, 0, .24, 1) forwards;
+    }
+    @keyframes loader-exit {
+      0% { clip-path: inset(0 0 0 0); }
+      100% { clip-path: inset(0 0 100% 0); }
+    }
+
+    /* ─── NAV ──────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 48px;
+      background: linear-gradient(to bottom, rgba(10,10,10,.95), transparent);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity .8s, transform .8s;
+    }
+    nav.visible { opacity: 1; transform: translateY(0); }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--grey-light); text-decoration: none;
+      transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ─── HERO ──────────────────────────────────────── */
+    .hero {
+      height: 100vh; min-height: 700px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+    .hero-lines {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to bottom, transparent 49.5%, rgba(255,255,255,.03) 49.5%, rgba(255,255,255,.03) 50.5%, transparent 50.5%),
+        linear-gradient(to right, transparent 49.5%, rgba(255,255,255,.03) 49.5%, rgba(255,255,255,.03) 50.5%, transparent 50.5%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .4em; text-transform: uppercase;
+      color: var(--orange);
+      border: 1px solid rgba(253, 58, 32, .4);
+      padding: 6px 16px; border-radius: 20px;
+      margin-bottom: 40px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadein .6s .8s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 14vw, 200px);
+      font-weight: 900; letter-spacing: -.03em;
+      line-height: .9; text-transform: uppercase;
+      position: relative;
+    }
+    .hero-title .word {
+      display: block; overflow: hidden;
+    }
+    .hero-title .word-inner {
+      display: block;
+      opacity: 0;
+      transform: translateY(110%);
+      animation: word-in .7s cubic-bezier(.16, 1, .3, 1) forwards;
+    }
+    .hero-title .word:nth-child(1) .word-inner { animation-delay: 1s; }
+    .hero-title .word:nth-child(2) .word-inner { animation-delay: 1.2s; color: var(--red); }
+    .hero-sub {
+      font-size: clamp(14px, 1.2vw, 16px);
+      font-weight: 300; color: var(--grey-light);
+      max-width: 520px; line-height: 1.7;
+      margin-top: 32px;
+      opacity: 0; animation: fadein .6s 1.8s forwards;
+    }
+    .hero-meta {
+      display: flex; gap: 48px;
+      margin-top: 56px;
+      opacity: 0; animation: fadein .6s 2s forwards;
+    }
+    .hero-meta-item p:first-child {
+      font-size: 10px; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--grey-light);
+      margin-bottom: 6px;
+    }
+    .hero-meta-item p:last-child {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 40px;
+      font-size: 10px; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--grey-light);
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0; animation: fadein .6s 2.4s forwards;
+    }
+    .scroll-hint::before {
+      content: '';
+      display: block; width: 1px; height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--grey-light));
+      animation: scroll-line 2s 2.5s ease-in-out infinite;
+    }
+    @keyframes scroll-line {
+      0%, 100% { transform: scaleY(1); opacity: .5; }
+      50% { transform: scaleY(1.5); opacity: 1; }
+    }
+    @keyframes word-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadein {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTION BASE ──────────────────────────────── */
+    section {
+      padding: 120px 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .4em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 32px;
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 900; letter-spacing: -.02em;
+      text-transform: uppercase; line-height: 1;
+    }
+    h3 {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    p { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,.7); }
+
+    /* ─── REVEAL ANIMATIONS ─────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity .8s cubic-bezier(.16, 1, .3, 1),
+                  transform .8s cubic-bezier(.16, 1, .3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+    .reveal-d4 { transition-delay: .4s; }
+
+    /* ─── BRIEF SECTION ─────────────────────────────── */
+    #brief { border-top: 1px solid var(--grey-mid); }
+    .brief-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      margin-top: 64px;
+    }
+    .brief-card {
+      background: var(--grey);
+      padding: 40px;
+    }
+    .brief-card-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: var(--grey-light); margin-bottom: 16px;
+    }
+    .brief-card-value {
+      font-family: var(--font-display);
+      font-size: 28px; font-weight: 800;
+      letter-spacing: .02em; text-transform: uppercase;
+      color: var(--white); line-height: 1.2;
+    }
+    .brief-colors {
+      display: flex; gap: 12px; margin-top: 12px;
+    }
+    .color-swatch {
+      width: 48px; height: 48px; border-radius: 4px;
+      display: flex; align-items: flex-end; padding: 4px;
+      font-size: 8px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    /* ─── AXE SECTION BASE ──────────────────────────── */
+    .axe-header {
+      padding: 80px 48px 0;
+      max-width: 1400px; margin: 0 auto;
+    }
+    .axe-number {
+      font-family: var(--font-display);
+      font-size: clamp(120px, 20vw, 280px);
+      font-weight: 900; line-height: .8;
+      letter-spacing: -.04em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.08);
+      user-select: none;
+      margin-bottom: -40px;
+    }
+    .axe-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 900; letter-spacing: -.01em;
+      text-transform: uppercase; line-height: 1.1;
+    }
+    .axe-title em { font-style: italic; }
+    .axe-description {
+      font-size: 15px; line-height: 1.9;
+      color: rgba(255,255,255,.6); max-width: 640px;
+      margin-top: 24px;
+    }
+    .axe-keyword {
+      display: inline-block;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 20px;
+      margin-right: 8px; margin-top: 20px;
+    }
+
+    /* ─── LOGO HERO ─────────────────────────────────── */
+    .logo-hero-wrap {
+      margin: 64px 0;
+      background: #111;
+      position: relative; overflow: hidden;
+    }
+    .logo-hero-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(225,6,0,.06), transparent);
+    }
+    .logo-hero-img {
+      width: 100%; max-height: 520px;
+      object-fit: contain;
+      padding: 60px;
+    }
+    .logo-hero-label {
+      position: absolute;
+      bottom: 24px; right: 32px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+    .logo-hero-wrap--heritage { background: #0C0B09; }
+    .logo-hero-wrap--heritage::before {
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,164,98,.05), transparent);
+    }
+    @keyframes punch {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.02); }
+      60% { transform: scale(.99); }
+      100% { transform: scale(1); }
+    }
+    .logo-hero-wrap:hover { animation: punch .4s ease; }
+
+    /* ─── VARIATIONS ────────────────────────────────── */
+    .variations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin: 0 0 2px;
+    }
+    .variation-card {
+      padding: 48px 40px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 28px; min-height: 220px;
+      position: relative; overflow: hidden;
+      transition: transform .3s;
+    }
+    .variation-card:hover { transform: scale(1.01); }
+    .variation-card--black { background: #F5F5F5; }
+    .variation-card--red { background: #111; }
+    .variation-card--white { background: #111; }
+    .variation-card--dark-red { background: #0D0000; }
+    .variation-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: var(--grey-light);
+    }
+    .variation-card--black .variation-label { color: #999; }
+    .variation-card--dark-red .variation-label { color: rgba(225,6,0,.6); }
+    .variation-img {
+      width: 80%; max-width: 320px;
+      object-fit: contain;
+    }
+    .icon-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .icon-card {
+      padding: 40px; min-height: 160px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .icon-card img { width: 80px; height: auto; }
+    .icon-card--black { background: #F0F0F0; }
+    .icon-card--red { background: #0D0D0D; }
+    .icon-card--white { background: #1A1A1A; }
+
+    /* ─── PALETTE ───────────────────────────────────── */
+    .palette-section {
+      padding: 64px 48px;
+      max-width: 1400px; margin: 0 auto;
+    }
+    .palette-title {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+      color: var(--grey-light); margin-bottom: 32px;
+    }
+    .palette-swatches {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .palette-swatch {
+      display: flex; flex-direction: column;
+      gap: 12px;
+    }
+    .palette-swatch-color {
+      width: 100px; height: 100px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .palette-swatch-name {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    .palette-swatch-hex {
+      font-size: 10px; color: var(--grey-light);
+      font-family: monospace;
+    }
+
+    /* ─── AXE 2 LOGO GRID ───────────────────────────── */
+    .axe2-logo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin: 0 0 2px;
+    }
+    .axe2-logo-card {
+      background: #0C0B09;
+      padding: 56px 40px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 300px; position: relative;
+    }
+    .axe2-logo-card--light { background: #EDE9E3; }
+    .axe2-logo-card img { width: 80%; max-width: 420px; object-fit: contain; }
+    .axe2-logo-card .variation-label { color: rgba(200,164,98,.5); }
+    .axe2-logo-card--light .variation-label { color: #999; }
+
+    /* ─── SKETCH ────────────────────────────────────── */
+    .sketch-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin: 2px 0;
+    }
+    .sketch-card {
+      background: var(--grey);
+      overflow: hidden; position: relative;
+    }
+    .sketch-card img {
+      width: 100%; height: auto;
+      display: block;
+      filter: grayscale(20%);
+      transition: filter .4s;
+    }
+    .sketch-card:hover img { filter: grayscale(0%); }
+    .sketch-card-label {
+      position: absolute; bottom: 20px; left: 24px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+    }
+
+    /* ─── MOODBOARD ─────────────────────────────────── */
+    .moodboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: clamp(200px, 22vw, 440px) clamp(200px, 22vw, 440px);
+      gap: 2px;
+    }
+    .moodboard-item {
+      overflow: hidden; position: relative;
+      background: var(--grey);
+    }
+    .moodboard-item:first-child { grid-row: span 2; }
+    .moodboard-item:first-child .moodboard-img { object-position: top center; }
+    .moodboard-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%) contrast(1.1);
+      transition: transform .5s, filter .5s;
+    }
+    .moodboard-item:hover .moodboard-img {
+      transform: scale(1.04);
+      filter: grayscale(0%) contrast(1.2);
+    }
+    .moodboard-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.7), transparent);
+    }
+    .moodboard-caption {
+      position: absolute; bottom: 16px; left: 20px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+    }
+
+    /* ─── CHAPTER GATES ──────────────────────────────── */
+    .axe-gate {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      text-align: center; padding: 48px;
+      background: var(--black);
+      border-top: 1px solid var(--grey-mid);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .axe-gate.exit { opacity: 0; transform: scale(1.04); pointer-events: none; }
+    .gate-ring {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%,-50%) scale(0);
+      width: 80vmax; height: 80vmax;
+      border-radius: 50%; pointer-events: none;
+      border: 1px solid rgba(225,6,0,.06);
+      animation: gate-pulse 3s ease-out infinite;
+    }
+    .gate-ring:nth-child(2) { animation-delay: 1s; }
+    .gate-ring:nth-child(3) { animation-delay: 2s; }
+    @keyframes gate-pulse {
+      0%   { transform: translate(-50%,-50%) scale(0); opacity: .5; }
+      100% { transform: translate(-50%,-50%) scale(1.5); opacity: 0; }
+    }
+    #gate2 .gate-ring { border-color: rgba(200,164,98,.05); }
+    #gate3 .gate-ring { border-color: rgba(221,185,63,.05); }
+    .gate-bg-number {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: clamp(180px, 32vw, 480px);
+      font-weight: 900; line-height: 1; letter-spacing: -.05em;
+      color: transparent; user-select: none; pointer-events: none;
+    }
+    #gate1 .gate-bg-number { -webkit-text-stroke: 1px rgba(225,6,0,.07); }
+    #gate2 .gate-bg-number { -webkit-text-stroke: 1px rgba(200,164,98,.07); }
+    #gate3 .gate-bg-number { -webkit-text-stroke: 1px rgba(221,185,63,.07); }
+    .gate-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .4em; text-transform: uppercase;
+      margin-bottom: 24px; position: relative; z-index: 1;
+    }
+    #gate1 .gate-label { color: var(--red); }
+    #gate2 .gate-label { color: var(--gold); }
+    #gate3 .gate-label { color: var(--accent3); }
+    .gate-title {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 9vw, 112px);
+      font-weight: 900; letter-spacing: -.02em;
+      text-transform: uppercase; line-height: .9;
+      margin-bottom: 32px; position: relative; z-index: 1;
+    }
+    .gate-title em { font-style: italic; }
+    #gate1 .gate-title em { color: var(--red); }
+    #gate2 .gate-title em { color: var(--gold); }
+    #gate3 .gate-title em { color: var(--accent3); }
+    .gate-desc {
+      font-size: 14px; line-height: 1.8;
+      color: rgba(255,255,255,.4); max-width: 420px;
+      margin-bottom: 56px; position: relative; z-index: 1;
+    }
+    .gate-cta {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 16px;
+      padding: 20px 48px;
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      background: transparent; cursor: pointer;
+      transition: background .25s, gap .3s, letter-spacing .3s;
+    }
+    #gate1 .gate-cta { color: var(--red); border: 1px solid rgba(225,6,0,.4); }
+    #gate1 .gate-cta:hover { background: rgba(225,6,0,.06); border-color: var(--red); }
+    #gate2 .gate-cta { color: var(--gold); border: 1px solid rgba(200,164,98,.4); }
+    #gate2 .gate-cta:hover { background: rgba(200,164,98,.06); border-color: var(--gold); }
+    #gate3 .gate-cta { color: var(--accent3); border: 1px solid rgba(221,185,63,.4); }
+    #gate3 .gate-cta:hover { background: rgba(221,185,63,.06); border-color: var(--accent3); }
+    .gate-cta:hover { gap: 24px; letter-spacing: .12em; }
+    .gate-cta .arrow { display: inline-block; transition: transform .3s; }
+    .gate-cta:hover .arrow { transform: translateX(8px); }
+
+    /* ─── AXE CONTENT ────────────────────────────────── */
+    .axe-content {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .8s cubic-bezier(.16,1,.3,1),
+                  transform .8s cubic-bezier(.16,1,.3,1);
+    }
+    .axe-content.is-revealed { opacity: 1; transform: translateY(0); }
+
+    /* ─── PART SEPARATOR ─────────────────────────────── */
+    .part-sep {
+      padding: 96px 48px 0;
+      max-width: 1400px; margin: 0 auto;
+    }
+    .part-tag {
+      display: block; font-size: 9px; font-weight: 600;
+      letter-spacing: .4em; text-transform: uppercase;
+      color: var(--grey-light);
+      position: relative; padding-top: 28px;
+    }
+    .part-tag::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 32px; height: 1px;
+    }
+    #axe1-content .part-tag::before { background: rgba(225,6,0,.6); }
+    #axe2-content .part-tag::before { background: rgba(200,164,98,.6); }
+    #axe3-content .part-tag::before { background: rgba(221,185,63,.6); }
+
+    /* ─── MOCKUP SECTION ─────────────────────────────── */
+    .mockup-section {
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 2px; margin: 2px 0;
+    }
+    .mockup-text {
+      background: var(--grey); padding: 72px 48px;
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 24px;
+    }
+    .mockup-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800; letter-spacing: -.01em;
+      text-transform: uppercase; line-height: 1.05;
+    }
+    .mockup-body {
+      font-size: 14px; line-height: 1.95;
+      color: rgba(255,255,255,.55); max-width: 380px;
+    }
+    .mockup-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .mockup-visual { overflow: hidden; background: #111; }
+    .mockup-visual img {
+      width: 100%; height: auto; display: block;
+      transition: transform .6s cubic-bezier(.16,1,.3,1);
+    }
+    .mockup-visual:hover img { transform: scale(1.02); }
+
+    /* ─── AXE CLOSE BAR ─────────────────────────────── */
+    .axe-close-bar {
+      position: sticky;
+      top: 72px; z-index: 90;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 48px;
+      background: rgba(10,10,10,.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--grey-mid);
+    }
+    .axe-close-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .3em; text-transform: uppercase;
+    }
+    .axe-close-btn {
+      background: none;
+      border: 1px solid var(--grey-mid);
+      color: var(--grey-light);
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      padding: 8px 22px; cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      transition: color .2s, border-color .2s;
+    }
+    .axe-close-btn:hover { color: var(--white); border-color: rgba(255,255,255,.35); }
+    @media (max-width: 900px) {
+      .axe-close-bar { padding: 10px 24px; }
+    }
+
+    /* ─── OUTRO ──────────────────────────────────────── */
+    #outro {
+      max-width: 100%;
+      padding: 0;
+      border-top: 1px solid var(--grey-mid);
+    }
+    .outro-inner {
+      max-width: 1400px; margin: 0 auto;
+      padding: 120px 48px;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+    }
+    .outro-tag {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .4em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 32px;
+    }
+    .outro-title {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 8vw, 96px);
+      font-weight: 900; letter-spacing: -.02em;
+      text-transform: uppercase; line-height: 1;
+      margin-bottom: 32px;
+    }
+    .outro-title em { color: var(--orange); font-style: italic; }
+    .outro-sub {
+      font-size: 15px; line-height: 1.8;
+      color: rgba(255,255,255,.5);
+      max-width: 480px; margin-bottom: 64px;
+    }
+    .contact-info {
+      font-size: 13px; color: var(--grey-light);
+      letter-spacing: .1em;
+    }
+    .contact-info a {
+      color: var(--orange); text-decoration: none;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--grey-mid);
+      padding: 32px 48px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo img { height: 20px; filter: brightness(0) invert(1); }
+    .footer-copy {
+      font-size: 11px; color: var(--grey-light);
+      letter-spacing: .1em;
+    }
+    .footer-right {
+      font-size: 11px; color: var(--grey-light);
+      letter-spacing: .1em; text-align: right;
+    }
+    .footer-right span { color: var(--orange); }
+
+    /* ─── NOISE OVERLAY ─────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      opacity: .025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      z-index: 8999;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      section, .axe-header, .palette-section, .outro-inner { padding: 80px 24px; }
+      .brief-grid, .variations-grid, .icon-cards, .axe2-logo-grid, .sketch-section { grid-template-columns: 1fr; }
+      .moodboard-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .moodboard-item { aspect-ratio: 4 / 3; }
+      .moodboard-item:first-child { grid-row: span 1; }
+      .mockup-section { grid-template-columns: 1fr; }
+      .part-sep { padding: 64px 24px 0; }
+      .gate-cta { padding: 16px 32px; font-size: 15px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div id="loader-impact"></div>
+    <div id="loader-impact"></div>
+    <div id="loader-impact"></div>
+    <div id="loader-title">IMPACT<br><span class="accent">BOXING</span></div>
+    <div id="loader-sub">Proposition d'identité visuelle</div>
+    <div id="loader-bar-wrap"><div id="loader-bar"></div></div>
+    <div id="loader-count">0%</div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">Studio <span>Djezo</span> &times; Impact Boxing</div>
+    <div class="nav-links">
+      <a href="#brief">Brief</a>
+      <a href="#gate1">Axe 1</a>
+      <a href="#gate2">Axe 2</a>
+      <a href="#gate3">Axe 3</a>
+      <a href="#outro">Suite</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-lines"></div>
+    <div class="hero-badge">Avril 2026 · Dossier Confidentiel</div>
+    <h1 class="hero-title">
+      <span class="word"><span class="word-inner">IMPACT</span></span>
+      <span class="word"><span class="word-inner">BOXING</span></span>
+    </h1>
+    <p class="hero-sub">Trois axes créatifs pour une identité visuelle qui frappe fort — conçus par Studio Djezo pour le Club de Boxe Thaï Impact Boxing.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <p>Mission</p>
+        <p>Identité Visuelle</p>
+      </div>
+      <div class="hero-meta-item">
+        <p>Discipline</p>
+        <p>Muay Thaï</p>
+      </div>
+      <div class="hero-meta-item">
+        <p>Axes</p>
+        <p>03 Propositions</p>
+      </div>
+    </div>
+    <div class="scroll-hint">Défiler pour explorer</div>
+  </div>
+
+  <!-- BRIEF -->
+  <section id="brief">
+    <span class="section-tag reveal">00 — Le Brief</span>
+    <div class="reveal">
+      <h2>Ce qu'on sait.<br>Ce qu'on veut.</h2>
+    </div>
+    <div class="brief-grid">
+      <div class="brief-card reveal reveal-d1">
+        <div class="brief-card-label">Client</div>
+        <div class="brief-card-value">Impact Boxing<br>Club de Boxe Thaï</div>
+      </div>
+      <div class="brief-card reveal reveal-d2">
+        <div class="brief-card-label">Émission principale</div>
+        <div class="brief-card-value">L'impact.<br>Tous niveaux.</div>
+        <p style="margin-top:16px; font-size:13px;">Homme, femme, dès 15 ans — un club ouvert qui ne transige pas sur l'intensité.</p>
+      </div>
+      <div class="brief-card reveal reveal-d3">
+        <div class="brief-card-label">Couleurs demandées</div>
+        <div class="brief-card-value" style="margin-bottom:16px;">Jaune &amp; Bleu</div>
+        <div class="brief-colors">
+          <div class="color-swatch" style="background:#FFE628; color:#000; font-size:9px; display:flex; align-items:flex-end; padding:8px; width:64px; height:64px; border-radius:4px; font-weight:700; letter-spacing:.1em;">JAUNE</div>
+          <div class="color-swatch" style="background:#1A3B8C; color:#fff; font-size:9px; display:flex; align-items:flex-end; padding:8px; width:64px; height:64px; border-radius:4px; font-weight:700; letter-spacing:.1em;">BLEU</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GATE 01 ══════════════════════════════════════ -->
+  <div class="axe-gate" id="gate1">
+    <div class="gate-ring"></div>
+    <div class="gate-ring"></div>
+    <div class="gate-ring"></div>
+    <div class="gate-bg-number">01</div>
+    <div class="gate-label">Axe Créatif · 01 / 03</div>
+    <h2 class="gate-title">Impact<br><em>Moderne</em></h2>
+    <p class="gate-desc">Un symbole qui frappe. Une identité construite sur l'énergie, le choc et la propagation — dans les codes du sport contemporain et du streetwear.</p>
+    <button class="gate-cta" onclick="revealAxe('gate1','axe1-content')">
+      Découvrir l'axe <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <!-- ═══ AXE 1 CONTENT ════════════════════════════════ -->
+  <div class="axe-content" id="axe1-content" hidden>
+
+    <div class="axe-close-bar">
+      <span class="axe-close-label" style="color:var(--red);">01 — Impact Moderne</span>
+      <button class="axe-close-btn" onclick="closeAxe('gate1','axe1-content')">← Fermer l'axe</button>
+    </div>
+
+    <!-- 01 — Direction créative + Moodboard -->
+    <div class="axe-header" style="padding-top:80px;">
+      <div class="axe-number reveal" style="-webkit-text-stroke: 1px rgba(225,6,0,.12);">01</div>
+      <div class="reveal reveal-d1">
+        <span class="part-tag" style="margin-bottom:20px;">01 — Direction créative</span>
+        <div class="section-tag" style="color:var(--red); margin-bottom:16px;">Impact Moderne</div>
+        <h2 class="axe-title">L'impact<br><em style="color:var(--red);">est une force.</em></h2>
+        <p class="axe-description">Une approche directe et universelle centrée sur le mot-clé central : l'impact. Le symbole radial évoque le choc, l'énergie, la propagation d'un coup. Le traitement graphique — contrasté, dynamique — s'inscrit dans les codes du sport contemporain et du streetwear. Typographie angulaire, lisibilité maximale.</p>
+        <div>
+          <span class="axe-keyword" style="background:rgba(225,6,0,.12); color:var(--red); border:1px solid rgba(225,6,0,.3);">Streetwear</span>
+          <span class="axe-keyword" style="background:rgba(225,6,0,.12); color:var(--red); border:1px solid rgba(225,6,0,.3);">Sport Moderne</span>
+          <span class="axe-keyword" style="background:rgba(225,6,0,.12); color:var(--red); border:1px solid rgba(225,6,0,.3);">Énergie Radiale</span>
+          <span class="axe-keyword" style="background:rgba(225,6,0,.12); color:var(--red); border:1px solid rgba(225,6,0,.3);">Typographie Angulaire</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="moodboard-grid reveal" style="margin-top:64px;">
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 1/moodboard1/impact.jpg" alt="Impact — direction visuelle">
+        <div class="moodboard-overlay"></div>
+        <div class="moodboard-caption">Direction principale</div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 1/moodboard1/147e0931264aad5c276658d1917caa87.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 1/moodboard1/edefaeacd44d870ed0fae43fb1cf676e.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 1/moodboard1/impact design.jpg" alt="Direction graphique">
+        <div class="moodboard-overlay"></div>
+        <div class="moodboard-caption">Graphisme & sport</div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 1/moodboard1/87a5ffcea592f3a38beb665d3a7d818b.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+    </div>
+
+    <!-- 02 — Identité visuelle -->
+    <div class="part-sep">
+      <span class="part-tag reveal">02 — Identité Visuelle</span>
+    </div>
+
+    <div class="logo-hero-wrap reveal" style="margin: 48px 0 2px;">
+      <img class="logo-hero-img" src="./Axe 1/SVG/logoprincipal1.svg" alt="Logo principal Axe 1">
+      <div class="logo-hero-label">Logo principal — Fond sombre</div>
+    </div>
+
+    <div class="variations-grid">
+      <div class="variation-card variation-card--black reveal reveal-d1">
+        <img class="variation-img" src="./Axe 1/SVG/Fichier 1variation.svg" alt="Logo noir">
+        <span class="variation-label">Positif — Fond clair</span>
+      </div>
+      <div class="variation-card variation-card--red reveal reveal-d2">
+        <img class="variation-img" src="./Axe 1/SVG/Fichier 4variation.svg" alt="Logo rouge">
+        <span class="variation-label">Accent rouge</span>
+      </div>
+      <div class="variation-card variation-card--white reveal reveal-d3">
+        <img class="variation-img" src="./Axe 1/SVG/Fichier 7variation.svg" alt="Logo blanc">
+        <span class="variation-label">Négatif — Fond sombre</span>
+      </div>
+    </div>
+
+    <div class="variations-grid" style="grid-template-columns: 1fr 1fr; margin-top: 2px;">
+      <div class="variation-card variation-card--red reveal reveal-d1" style="min-height: 320px;">
+        <img src="./Axe 1/SVG/Fichier 2variation.svg" alt="Logo grand format blanc" style="width:90%; filter:invert(1);">
+        <span class="variation-label">Grand format — Blanc</span>
+      </div>
+      <div class="variation-card variation-card--dark-red reveal reveal-d2" style="min-height: 320px;">
+        <img src="./Axe 1/SVG/Fichier 5variation.svg" alt="Logo grand format rouge" style="width:90%;">
+        <span class="variation-label">Grand format — Accent rouge</span>
+      </div>
+    </div>
+
+    <div class="icon-cards" style="margin-top: 2px;">
+      <div class="icon-card icon-card--black reveal reveal-d1">
+        <img src="./Axe 1/SVG/Fichier 3variation.svg" alt="Icône noire">
+      </div>
+      <div class="icon-card icon-card--red reveal reveal-d2">
+        <img src="./Axe 1/SVG/Fichier 6variation.svg" alt="Icône rouge">
+      </div>
+      <div class="icon-card icon-card--white reveal reveal-d3">
+        <img src="./Axe 1/SVG/Fichier 9variation.svg" alt="Icône blanche">
+      </div>
+    </div>
+
+    <div class="palette-section reveal">
+      <div class="palette-title">Palette chromatique — Axe 1</div>
+      <div class="palette-swatches">
+        <div class="palette-swatch reveal reveal-d1">
+          <div class="palette-swatch-color" style="background:#0A0A0A; border:1px solid #333;"></div>
+          <div class="palette-swatch-name">Noir Carbone</div>
+          <div class="palette-swatch-hex">#0A0A0A</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d2">
+          <div class="palette-swatch-color" style="background:#E10600;"></div>
+          <div class="palette-swatch-name">Rouge Impact</div>
+          <div class="palette-swatch-hex">#E10600</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d3">
+          <div class="palette-swatch-color" style="background:#FFFFFF; border:1px solid #333;"></div>
+          <div class="palette-swatch-name">Blanc Pur</div>
+          <div class="palette-swatch-hex">#FFFFFF</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d4">
+          <div class="palette-swatch-color" style="background:#7A7A7A;"></div>
+          <div class="palette-swatch-name">Gris Acier</div>
+          <div class="palette-swatch-hex">#7A7A7A</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d4" style="transition-delay:.5s">
+          <div class="palette-swatch-color" style="background:#C9A24A;"></div>
+          <div class="palette-swatch-name">Or Mat</div>
+          <div class="palette-swatch-hex">#C9A24A</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 — Mise en situation -->
+    <div class="part-sep">
+      <span class="part-tag reveal">03 — Mise en Situation</span>
+    </div>
+    <div class="mockup-section reveal">
+      <div class="mockup-text">
+        <h3 class="mockup-title">L'identité<br>en action.</h3>
+        <p class="mockup-body">Le logo prend vie sur les supports du quotidien : équipement sportif, réseaux sociaux, signalétique du club. Chaque application confirme la force et la lisibilité du système graphique — un impact immédiat, quelle que soit la taille ou le contexte.</p>
+        <div class="mockup-tags">
+          <span class="axe-keyword" style="background:rgba(225,6,0,.12); color:var(--red); border:1px solid rgba(225,6,0,.3);">Équipement</span>
+          <span class="axe-keyword" style="background:rgba(225,6,0,.12); color:var(--red); border:1px solid rgba(225,6,0,.3);">Réseaux</span>
+          <span class="axe-keyword" style="background:rgba(225,6,0,.12); color:var(--red); border:1px solid rgba(225,6,0,.3);">Signalétique</span>
+        </div>
+      </div>
+      <div class="mockup-visual">
+        <img src="./Axe 1/iteration1.png" alt="Itération Axe 1 — Application mockup">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ GATE 02 ══════════════════════════════════════ -->
+  <div class="axe-gate" id="gate2">
+    <div class="gate-ring"></div>
+    <div class="gate-ring"></div>
+    <div class="gate-ring"></div>
+    <div class="gate-bg-number">02</div>
+    <div class="gate-label">Axe Créatif · 02 / 03</div>
+    <h2 class="gate-title">Héritage<br><em>du Combat</em></h2>
+    <p class="gate-desc">L'authenticité du Muay Thaï gravée dans le signe. Un style brut, organique — la transmission d'une culture du respect et de la discipline.</p>
+    <button class="gate-cta" onclick="revealAxe('gate2','axe2-content')">
+      Découvrir l'axe <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <!-- ═══ AXE 2 CONTENT ════════════════════════════════ -->
+  <div class="axe-content" id="axe2-content" hidden>
+
+    <div class="axe-close-bar">
+      <span class="axe-close-label" style="color:var(--gold);">02 — Héritage du Combat</span>
+      <button class="axe-close-btn" onclick="closeAxe('gate2','axe2-content')">← Fermer l'axe</button>
+    </div>
+
+    <!-- 01 — Direction créative + Moodboard -->
+    <div class="axe-header" style="padding-top:80px;">
+      <div class="axe-number reveal" style="-webkit-text-stroke: 1px rgba(200,164,98,.12);">02</div>
+      <div class="reveal reveal-d1">
+        <span class="part-tag" style="margin-bottom:20px;">01 — Direction créative</span>
+        <div class="section-tag" style="color:var(--gold); margin-bottom:16px;">Héritage du Combat</div>
+        <h2 class="axe-title">L'héritage<br><em style="color:var(--gold);">du ring.</em></h2>
+        <p class="axe-description">Une approche humaine et authentique ancrée dans les origines du combat. Le style graphique — brut, organique — fait référence aux techniques d'encrage et de gravure ancienne. Du caractère, de la profondeur, une culture du respect et de la transmission. L'authenticité du Muay Thaï sans les clichés visuels traditionnels.</p>
+        <div>
+          <span class="axe-keyword" style="background:rgba(200,164,98,.1); color:var(--gold); border:1px solid rgba(200,164,98,.3);">Gravure / Encrage</span>
+          <span class="axe-keyword" style="background:rgba(200,164,98,.1); color:var(--gold); border:1px solid rgba(200,164,98,.3);">Héritage Boxe</span>
+          <span class="axe-keyword" style="background:rgba(200,164,98,.1); color:var(--gold); border:1px solid rgba(200,164,98,.3);">Organique & Brut</span>
+          <span class="axe-keyword" style="background:rgba(200,164,98,.1); color:var(--gold); border:1px solid rgba(200,164,98,.3);">Profondeur Émotionnelle</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="moodboard-grid reveal" style="margin-top:64px;">
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 2/moodboard2/1.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 2/moodboard2/2.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 2/moodboard2/3.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 2/moodboard2/4.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 2/moodboard2/5.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+    </div>
+
+    <!-- 02 — Identité visuelle -->
+    <div class="part-sep">
+      <span class="part-tag reveal">02 — Identité Visuelle</span>
+    </div>
+
+    <div class="logo-hero-wrap reveal" style="margin: 48px 0 2px; background:#EDE9E3;">
+      <img class="logo-hero-img" src="./Axe 2/SVG/LOGO principal 2.svg" alt="Logo principal Axe 2 — Héritage du combat" style="max-height: 720px; padding: 80px;">
+      <div class="logo-hero-label" style="color:rgba(92,75,53,.5);">Logo principal — Version fond clair</div>
+    </div>
+
+    <div class="axe2-logo-grid">
+      <div class="axe2-logo-card axe2-logo-card--light reveal reveal-d1">
+        <img src="./Axe 2/SVG/LOGO principal 2.svg" alt="Logo fond clair">
+        <div class="variation-label" style="position:absolute; bottom:20px; left:24px; font-size:10px; font-weight:600; letter-spacing:.25em; text-transform:uppercase; color:#999;">Logo principal — Fond clair</div>
+      </div>
+      <div class="axe2-logo-card reveal reveal-d2">
+        <img src="./Axe 2/SVG/LOGO FOND NOIR 2.svg" alt="Logo sombre">
+        <div class="variation-label" style="position:absolute; bottom:20px; left:24px; font-size:10px; font-weight:600; letter-spacing:.25em; text-transform:uppercase; color:rgba(200,164,98,.4);">Logo principal — Fond sombre</div>
+      </div>
+      <div class="axe2-logo-card axe2-logo-card--light reveal reveal-d1">
+        <img src="./Axe 2/SVG/logotypo.svg" alt="Logotype typographique fond clair">
+        <div class="variation-label" style="position:absolute; bottom:20px; left:24px; font-size:10px; font-weight:600; letter-spacing:.25em; text-transform:uppercase; color:#999;">Logotype typographique — Fond clair</div>
+      </div>
+      <div class="axe2-logo-card reveal reveal-d2">
+        <img src="./Axe 2/SVG/logotypo fond sombre.svg" alt="Logotype typographique fond sombre">
+        <div class="variation-label" style="position:absolute; bottom:20px; left:24px; font-size:10px; font-weight:600; letter-spacing:.25em; text-transform:uppercase; color:rgba(200,164,98,.4);">Logotype typographique — Fond sombre</div>
+      </div>
+    </div>
+
+    <div class="palette-section reveal">
+      <div class="palette-title">Palette chromatique — Axe 2</div>
+      <div class="palette-swatches">
+        <div class="palette-swatch reveal reveal-d1">
+          <div class="palette-swatch-color" style="background:#0C0B09; border:1px solid #2a2a22;"></div>
+          <div class="palette-swatch-name">Noir Encre</div>
+          <div class="palette-swatch-hex">#0C0B09</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d2">
+          <div class="palette-swatch-color" style="background:#C8A462;"></div>
+          <div class="palette-swatch-name">Or Patiné</div>
+          <div class="palette-swatch-hex">#C8A462</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d3">
+          <div class="palette-swatch-color" style="background:#EDE9E3;"></div>
+          <div class="palette-swatch-name">Ivoire</div>
+          <div class="palette-swatch-hex">#EDE9E3</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d4">
+          <div class="palette-swatch-color" style="background:#5C4B35;"></div>
+          <div class="palette-swatch-name">Brun Cuir</div>
+          <div class="palette-swatch-hex">#5C4B35</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d4" style="transition-delay:.5s">
+          <div class="palette-swatch-color" style="background:#7A1E1E;"></div>
+          <div class="palette-swatch-name">Rouge Profond</div>
+          <div class="palette-swatch-hex">#7A1E1E</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 — Mise en situation -->
+    <div class="part-sep">
+      <span class="part-tag reveal">03 — Mise en Situation</span>
+    </div>
+    <div class="mockup-section reveal">
+      <div class="mockup-text">
+        <h3 class="mockup-title">Ancrer<br>l'<em style="color:var(--gold); font-style:italic;">authenticité.</em></h3>
+        <p class="mockup-body">Sur chaque support, l'identité gravée exprime la profondeur du Muay Thaï — une discipline qui se transmet. Les textures et le traitement typographique évoquent l'héritage du ring, portant une histoire dans chaque application.</p>
+        <div class="mockup-tags">
+          <span class="axe-keyword" style="background:rgba(200,164,98,.1); color:var(--gold); border:1px solid rgba(200,164,98,.3);">Équipement</span>
+          <span class="axe-keyword" style="background:rgba(200,164,98,.1); color:var(--gold); border:1px solid rgba(200,164,98,.3);">Réseaux</span>
+          <span class="axe-keyword" style="background:rgba(200,164,98,.1); color:var(--gold); border:1px solid rgba(200,164,98,.3);">Signalétique</span>
+        </div>
+      </div>
+      <div class="mockup-visual">
+        <img src="./Axe 2/iteration2.png" alt="Itération Axe 2 — Application mockup">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GATE 03 -->
+  <div class="axe-gate" id="gate3">
+    <div class="gate-ring"></div>
+    <div class="gate-ring"></div>
+    <div class="gate-ring"></div>
+    <div class="gate-bg-number">03</div>
+    <div class="gate-label">Axe Créatif · 03 / 03</div>
+    <h2 class="gate-title">Club<br><em>Identity</em></h2>
+    <p class="gate-desc">Une typographie cursive, un badge vintage, un club ancré dans sa ville. L'identité qui rassemble — chaleureuse, déclinable, taillée pour le textile.</p>
+    <button class="gate-cta" onclick="revealAxe('gate3','axe3-content')">
+      Découvrir l'axe <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <!-- AXE 3 CONTENT -->
+  <div class="axe-content" id="axe3-content" hidden>
+
+    <div class="axe-close-bar">
+      <span class="axe-close-label" style="color:var(--accent3);">03 — Club Identity</span>
+      <button class="axe-close-btn" onclick="closeAxe('gate3','axe3-content')">← Fermer l'axe</button>
+    </div>
+
+    <!-- 01 — Direction créative + Moodboard -->
+    <div class="axe-header" style="padding-top:80px;">
+      <div class="axe-number reveal" style="-webkit-text-stroke: 1px rgba(221,185,63,.12);">03</div>
+      <div class="reveal reveal-d1">
+        <span class="part-tag" style="margin-bottom:20px;">01 — Direction créative</span>
+        <div class="section-tag" style="color:var(--accent3); margin-bottom:16px;">Club Identity</div>
+        <h2 class="axe-title">L'identité<br><em style="color:var(--accent3);">qui rassemble.</em></h2>
+        <p class="axe-description">Une approche centrée sur la typographie et l'appartenance. Le logotype manuscrit "Impact Boxing" apporte une dimension humaine, accessible et vivante — en contraste avec des éléments structurés. Construit en badge sportif vintage, enrichi de mentions locales (Boxe Thaï, La Seyne-sur-Mer, Est. 2020), le signe affirme l'ancrage territorial du club. Une identité chaleureuse, fédératrice, taillée pour le textile et la communication quotidienne.</p>
+        <div>
+          <span class="axe-keyword" style="background:rgba(221,185,63,.1); color:var(--accent3); border:1px solid rgba(221,185,63,.3);">Typographie Cursive</span>
+          <span class="axe-keyword" style="background:rgba(221,185,63,.1); color:var(--accent3); border:1px solid rgba(221,185,63,.3);">Badge Vintage</span>
+          <span class="axe-keyword" style="background:rgba(221,185,63,.1); color:var(--accent3); border:1px solid rgba(221,185,63,.3);">Ancrage Territorial</span>
+          <span class="axe-keyword" style="background:rgba(221,185,63,.1); color:var(--accent3); border:1px solid rgba(221,185,63,.3);">Esprit de Club</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="moodboard-grid reveal" style="margin-top:64px;">
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 3/moodboard3/traitement typo.jpg" alt="Traitement typographique — direction visuelle">
+        <div class="moodboard-overlay"></div>
+        <div class="moodboard-caption">Direction principale</div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 3/moodboard3/432344325340de5f8ad257558c64daa3.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 3/moodboard3/b98c0f889f417a6a31470dbfce666ba7.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 3/moodboard3/055bf4ce6a8bb8d17de384dfdbb72dd3.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+      <div class="moodboard-item">
+        <img class="moodboard-img" src="./Axe 3/moodboard3/d6984de860d3cf2775f3e6583f4f20c8.jpg" alt="Référence visuelle">
+        <div class="moodboard-overlay"></div>
+      </div>
+    </div>
+
+    <!-- 02 — Identité visuelle -->
+    <div class="part-sep">
+      <span class="part-tag reveal">02 — Identité Visuelle</span>
+    </div>
+
+    <div class="logo-hero-wrap reveal" style="margin: 48px 0 2px; background:var(--cream3);">
+      <img class="logo-hero-img" src="./Axe 3/SVG/LOGOPRINCIPAL (1).svg" alt="Logo principal Axe 3 — Club Identity">
+      <div class="logo-hero-label" style="color:rgba(13,43,69,.4);">Logo principal — Fond clair</div>
+    </div>
+
+    <div class="variations-grid">
+      <div class="variation-card reveal reveal-d1" style="background:var(--cream3); min-height:240px;">
+        <img class="variation-img" src="./Axe 3/SVG/DECLINAISON (1).svg" alt="Déclinaison 1">
+        <span class="variation-label" style="color:rgba(13,43,69,.5);">Déclinaison 1</span>
+      </div>
+      <div class="variation-card reveal reveal-d2" style="background:var(--cream3); min-height:240px;">
+        <img class="variation-img" src="./Axe 3/SVG/DECLINAISON (2).svg" alt="Déclinaison 2">
+        <span class="variation-label" style="color:rgba(13,43,69,.5);">Déclinaison 2</span>
+      </div>
+      <div class="variation-card reveal reveal-d3" style="background:var(--cream3); min-height:240px;">
+        <img class="variation-img" src="./Axe 3/SVG/DECLINAISON (3).svg" alt="Déclinaison 3">
+        <span class="variation-label" style="color:rgba(13,43,69,.5);">Déclinaison 3</span>
+      </div>
+    </div>
+
+    <div class="palette-section reveal">
+      <div class="palette-title">Palette chromatique — Axe 3</div>
+      <div class="palette-swatches">
+        <div class="palette-swatch reveal reveal-d1">
+          <div class="palette-swatch-color" style="background:#0D2B45;"></div>
+          <div class="palette-swatch-name">Bleu Marine</div>
+          <div class="palette-swatch-hex">#0D2B45</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d2">
+          <div class="palette-swatch-color" style="background:#DDB93F;"></div>
+          <div class="palette-swatch-name">Jaune Accent</div>
+          <div class="palette-swatch-hex">#DDB93F</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d3">
+          <div class="palette-swatch-color" style="background:#F4F1EA; border:1px solid rgba(255,255,255,.1);"></div>
+          <div class="palette-swatch-name">Blanc Ivoire</div>
+          <div class="palette-swatch-hex">#F4F1EA</div>
+        </div>
+        <div class="palette-swatch reveal reveal-d4">
+          <div class="palette-swatch-color" style="background:#0A0A0A; border:1px solid #333;"></div>
+          <div class="palette-swatch-name">Noir</div>
+          <div class="palette-swatch-hex">#0A0A0A</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 — Mise en situation -->
+    <div class="part-sep">
+      <span class="part-tag reveal">03 — Mise en Situation</span>
+    </div>
+    <div class="mockup-section reveal">
+      <div class="mockup-text" style="background:var(--navy);">
+        <h3 class="mockup-title">Une identité<br><em style="color:var(--accent3); font-style:italic;">de territoire.</em></h3>
+        <p class="mockup-body">Le logotype cursif prend vie sur les supports du quotidien. En badge, sur le textile, les réseaux, la signalétique — l'identité d'Impact Boxing parle à tous, rassemble, et porte l'ancrage de La Seyne-sur-Mer avec fierté. Performance et esprit de club, côte à côte.</p>
+        <div class="mockup-tags">
+          <span class="axe-keyword" style="background:rgba(221,185,63,.1); color:var(--accent3); border:1px solid rgba(221,185,63,.3);">Textile</span>
+          <span class="axe-keyword" style="background:rgba(221,185,63,.1); color:var(--accent3); border:1px solid rgba(221,185,63,.3);">Réseaux</span>
+          <span class="axe-keyword" style="background:rgba(221,185,63,.1); color:var(--accent3); border:1px solid rgba(221,185,63,.3);">Signalétique</span>
+        </div>
+      </div>
+      <div class="mockup-visual">
+        <img src="./Axe 3/BRANDBOOK.png" alt="Brandbook Axe 3 — Club Identity">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- OUTRO -->
+  <div id="outro">
+    <div class="outro-inner">
+      <div class="outro-tag reveal">La suite</div>
+      <h2 class="outro-title reveal reveal-d1">Et<br>maintenant,<br><em>à toi.</em></h2>
+      <p class="outro-sub reveal reveal-d2">
+        Ces trois directions ont été construites pour exprimer des visions distinctes de ce qu'est Impact Boxing. Le bon axe, c'est celui qui résonne avec ce que tu veux projeter.
+      </p>
+      <div class="contact-info reveal reveal-d3">
+        Studio Djezo · <a href="mailto:contact@studiodjezo.com">contact@studiodjezo.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <svg height="18" viewBox="0 0 545.08 110.69" xmlns="http://www.w3.org/2000/svg" aria-label="Studio Djezo" style="display:block;"><g fill="#FFFFFF"><path d="M149.01,61.48c-2.61-2.43-6.79-4.21-12.53-5.32l-7.1-1.38c-2.66-.53-4.52-1.25-5.58-2.17-1.07-.92-1.6-2.25-1.6-3.99s.7-3.16,2.1-4.27c1.4-1.11,3.75-1.67,7.03-1.67,3.09,0,5.33.57,6.7,1.7,1.38,1.14,2.38,2.91,3.01,5.33l11.02-1.38c-.39-2.85-1.34-5.37-2.87-7.57-1.52-2.2-3.72-3.92-6.59-5.18-2.88-1.26-6.56-1.88-11.05-1.88-4.11,0-7.71.59-10.8,1.77-3.09,1.18-5.49,2.94-7.21,5.25-1.71,2.32-2.57,5.17-2.57,8.56,0,4.54,1.39,7.98,4.17,10.32,2.77,2.34,6.92,4.02,12.42,5.04l6.82,1.3c2.84.48,4.74,1.28,5.68,2.39.95,1.11,1.42,2.44,1.42,3.99,0,1.93-.67,3.52-2,4.78s-3.66,1.88-6.99,1.88-6.12-.65-7.93-1.95c-1.81-1.31-2.94-3.36-3.37-6.16h-11.31c.49,5.84,2.64,10.17,6.45,12.97,3.82,2.8,9.04,4.2,15.65,4.2s12.13-1.48,15.66-4.46c3.52-2.97,5.29-6.89,5.29-11.77,0-4.44-1.31-7.89-3.92-10.33Z"/><path d="M182.49,78.11c-.63.2-1.29.36-1.99.47-.7.13-1.47.19-2.29.19-1.54,0-2.68-.45-3.4-1.34-.73-.9-1.09-2.14-1.09-3.74v-16.37h8.91v-8.41h-8.91v-10.07h-10.8v10.07h-6.01v8.41h6.01v15.94c0,4.64.9,8.16,2.68,10.58,1.79,2.41,5.03,3.62,9.71,3.62,1.7,0,3.22-.12,4.57-.36,1.35-.24,2.7-.58,4.06-1.02l-1.45-7.97Z"/><path d="M212.56,48.91v22.32c0,1.21-.2,2.22-.58,3.04-.39.83-.94,1.6-1.67,2.32-1.54,1.55-3.43,2.32-5.65,2.32-1.79,0-3.09-.51-3.91-1.52-.82-1.02-1.23-2.71-1.23-5.07v-23.41h-10.73v25.29c0,4.4,1.02,7.78,3.04,10.15,2.03,2.36,5.08,3.55,9.14,3.55,4.73,0,8.67-2.01,11.81-6.02v4.86h10.5v-37.83h-10.72Z"/><path d="M257.27,35v17.68c-1.36-1.74-2.94-2.99-4.75-3.77-1.81-.77-3.71-1.16-5.69-1.16-5.02,0-8.97,1.83-11.84,5.47-2.88,3.65-4.32,8.64-4.32,14.97,0,3.91.58,7.35,1.74,10.32,1.16,2.97,2.89,5.28,5.18,6.92,2.3,1.64,5.14,2.47,8.52,2.47,2.51,0,4.71-.5,6.59-1.49,1.89-.99,3.53-2.4,4.93-4.24v4.57h10.43v-51.74h-10.79ZM257.34,68.77c0,3.18-.69,5.71-2.07,7.57-1.37,1.86-3.37,2.79-5.97,2.79-2.13,0-3.95-.86-5.47-2.57-1.53-1.72-2.29-4.65-2.29-8.81s.74-6.91,2.21-8.69c1.48-1.79,3.4-2.68,5.76-2.68,2.51,0,4.45.87,5.8,2.6,1.35,1.74,2.03,4.4,2.03,7.97v1.82Z"/><path d="M276.61,34.86v8.62h10.87v-8.62h-10.87ZM276.69,48.91v37.83h10.72v-37.83h-10.72Z"/><path d="M328.17,52.97c-3.31-3.48-7.98-5.22-14.02-5.22s-10.7,1.79-14.13,5.36c-3.43,3.58-5.15,8.53-5.15,14.86s1.66,11.17,4.97,14.67c3.3,3.51,7.98,5.26,14.02,5.26s10.76-1.8,14.16-5.4c3.41-3.6,5.11-8.54,5.11-14.82s-1.65-11.23-4.96-14.71ZM320.2,76.12c-1.33,2.06-3.42,3.08-6.27,3.08s-4.85-1.01-6.16-3.04c-1.3-2.03-1.96-4.81-1.96-8.34s.66-6.36,1.96-8.36c1.31-2.01,3.36-3.01,6.16-3.01s4.94,1,6.27,3.01c1.33,2,1.99,4.77,1.99,8.29s-.66,6.32-1.99,8.37Z"/><path d="M395.52,41.38c-4.4-4.25-10.68-6.38-18.84-6.38h-19.64v51.74h18.77c8.31,0,14.77-2.22,19.38-6.67,4.62-4.44,6.92-10.96,6.92-19.56s-2.19-14.88-6.59-19.13ZM387.01,72.82c-2.3,2.86-5.88,4.28-10.76,4.28h-7.97v-32.46h8.69c4.69,0,8.1,1.37,10.25,4.13,2.15,2.75,3.23,6.71,3.23,11.88s-1.15,9.32-3.44,12.17Z"/><path d="M410.01,48.91v39.35c0,1.64-.32,2.87-.97,3.69-.66.83-1.73,1.24-3.23,1.24-.67,0-1.36-.05-2.06-.15-.7-.1-1.39-.22-2.07-.36l-1.52,7.61c1.3.38,2.67.7,4.09.94,1.43.24,2.91.36,4.46.36,4.44,0,7.57-1.23,9.38-3.69,1.81-2.47,2.72-5.85,2.72-10.15v-38.84h-10.8ZM409.87,34.86v8.62h10.87v-8.62h-10.87Z"/><path d="M464.65,66.67c0-5.75-1.49-10.34-4.46-13.77-2.97-3.43-7.38-5.15-13.22-5.15-3.77,0-7.06.8-9.86,2.39-2.8,1.6-4.97,3.92-6.52,6.96-1.54,3.04-2.32,6.74-2.32,11.09,0,6.28,1.62,11.13,4.86,14.56,3.23,3.43,7.87,5.15,13.91,5.15,5.07,0,9.03-1.1,11.88-3.3,2.85-2.2,4.64-5.33,5.37-9.38h-10.08c-.38,1.54-1.13,2.75-2.24,3.62s-2.8,1.3-5.07,1.3c-5.03,0-7.76-3.31-8.19-9.92h25.94v-3.55ZM438.78,64.06c.29-2.76,1.04-4.89,2.25-6.42,1.2-1.52,3.19-2.28,5.94-2.28s4.72.74,5.76,2.21c1.04,1.48,1.63,3.64,1.77,6.49h-15.72Z"/><path d="M482.69,78.4l18.91-22.46v-7.03h-31.44v8.26h18.55l-18.99,22.54v7.03h31.96l.94-8.34h-19.93Z"/><path d="M540.12,52.97c-3.31-3.48-7.99-5.22-14.02-5.22s-10.7,1.79-14.13,5.36c-3.43,3.58-5.15,8.53-5.15,14.86s1.65,11.17,4.96,14.67c3.31,3.51,7.99,5.26,14.03,5.26s10.76-1.8,14.16-5.4c3.41-3.6,5.11-8.54,5.11-14.82s-1.65-11.23-4.96-14.71ZM532.15,76.12c-1.33,2.06-3.42,3.08-6.27,3.08s-4.86-1.01-6.16-3.04c-1.3-2.03-1.96-4.81-1.96-8.34s.66-6.36,1.96-8.36c1.3-2.01,3.36-3.01,6.16-3.01s4.94,1,6.27,3.01c1.32,2,1.99,4.77,1.99,8.29s-.67,6.32-1.99,8.37Z"/><path d="M88,48.95H24.59c15.05-9.57,34.59-13.99,56.96-12.85l6.29.32-1.17-6.18C83.2,11.81,68.67,1.64,43.48.01H0s0,57.34,0,57.34h69.75c-12.07,9.95-39.03,18.1-64.44,17.53l-5.31-.08v35.89h43.45c16.1,0,28.04-4.45,35.5-13.22,5.17-6.09,7.98-14.2,8.81-22.07.91-8.73.24-17.69.24-26.45ZM9.91,9.91h33.09c17.1,1.14,27.62,6.41,32.05,16.1h-.41c-26.2,0-48.43,7.41-64.73,21.54V9.91ZM71.4,91.05c-5.49,6.46-14.89,9.73-27.95,9.73H10.19v-15.99c12.87-.19,24.79-1.84,35.45-4.92,12.09-3.49,22.92-8.9,32.2-16.1.8,12.13-1.36,21.3-6.44,27.28Z"/></g></svg>
+    </div>
+    <div class="footer-copy">© 2026 Studio Djezo — Tous droits réservés</div>
+    <div class="footer-right">Impact Boxing · <span>Identité Visuelle</span><br>Dossier confidentiel</div>
+  </footer>
+
+  <script>
+    // ─── CURSOR ───────────────────────────────────────
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      rx += (mx - rx) * .12;
+      ry += (my - ry) * .12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // ─── LOADER ───────────────────────────────────────
+    const bar = document.getElementById('loader-bar');
+    const count = document.getElementById('loader-count');
+    const loader = document.getElementById('loader');
+    const nav = document.getElementById('nav');
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 4 + 1;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          nav.classList.add('visible');
+          setTimeout(() => { loader.style.display = 'none'; }, 700);
+        }, 400);
+      }
+      bar.style.width = progress + '%';
+      count.textContent = Math.floor(progress) + '%';
+    }, 40);
+
+    // ─── SCROLL REVEAL ────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ─── GATE REVEAL ──────────────────────────────────
+    function revealAxe(gateId, contentId) {
+      const gate = document.getElementById(gateId);
+      const content = document.getElementById(contentId);
+
+      gate.classList.add('exit');
+
+      setTimeout(() => {
+        gate.style.display = 'none';
+        content.removeAttribute('hidden');
+        content.offsetHeight; // force reflow
+        content.classList.add('is-revealed');
+        content.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        setTimeout(() => {
+          content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }, 500);
+    }
+
+    // ─── GATE CLOSE ───────────────────────────────────
+    function closeAxe(gateId, contentId) {
+      const gate = document.getElementById(gateId);
+      const content = document.getElementById(contentId);
+      content.classList.remove('is-revealed');
+      setTimeout(() => {
+        content.setAttribute('hidden', '');
+        gate.style.display = '';
+        gate.offsetHeight; // force reflow
+        gate.classList.remove('exit');
+        gate.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 500);
+    }
+
+    // ─── NAV → AXE CONTENT FALLBACK ───────────────────
+    document.querySelectorAll('.nav-links a[href^="#gate"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const gateId = link.getAttribute('href').slice(1);
+        const gate = document.getElementById(gateId);
+        if (gate && gate.style.display === 'none') {
+          e.preventDefault();
+          const num = gateId.replace('gate', '');
+          document.getElementById('axe' + num + '-content')
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ─── LOGO PUNCH ───────────────────────────────────
+    document.querySelectorAll('.logo-hero-wrap').forEach(el => {
+      el.addEventListener('click', () => {
+        el.style.animation = 'none';
+        el.offsetHeight;
+        el.style.animation = 'punch .4s ease';
+      });
+    });
+  </script>
+</body>
+</html>
